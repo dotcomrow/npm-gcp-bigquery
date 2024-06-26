@@ -13,6 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
+          cd .git
+          sudo chgrp -R groupname .
+          sudo chmod -R g+rwX .
+          sudo find . -type d -exec chmod g+s '{}' +
+          cd ..
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           increment_version() {
