@@ -8,15 +8,11 @@ permissions: write-all
 jobs:
   tag-npm-release:
     name: Tag new npm package releases
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v3
       - run: |
-          cd .git
-          sudo chmod -R g+rwX .
-          sudo find . -type d -exec chmod g+s '{}' +
-          cd ..
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           increment_version() {
