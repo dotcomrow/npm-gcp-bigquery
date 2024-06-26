@@ -16,7 +16,7 @@
     "author": "Chris Lyons",
     "license": "GNUGPLv3",
     "dependencies": {
-        "axios": "^0.21.1",
+        "axios": "^0.28.0",
         "jose": "^5.4.1",
         "@haverstack/axios-fetch-adapter": "^0.12.0"
     },
