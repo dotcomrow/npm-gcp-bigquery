@@ -1,22 +1,8 @@
-import GCloudLogger from '../src/index';
+import GCloudBigquery from '../src/index';
 import * as fs from 'fs';
 
-const projectId = 'gcploggingproject-427121'; // replace with your GCP project ID    
-const keyFilePath = '/Users/admin/Downloads/logging-test-key.json'; // replace with the path to your service account key file
+const projectId = 'database-30f7f3c2abdbda4f'; 
+const keyFilePath = '/Users/admin/Downloads/database-30f7f3c2abdbda4f-80b680adee27.json'; // replace with the path to your service account key file
 const keyFileContent = fs.readFileSync(keyFilePath, 'utf8');
 
-const logName = 'my-log';
-const severity = 'INFO';
-const message = 'This is a log message test log16.';
-
-GCloudLogger.logEntry(projectId, keyFileContent, logName, 
-    [
-        {
-          severity: severity,
-          // textPayload: message,
-          jsonPayload: {
-            message: message
-          }
-        },
-      ],
-);
+GCloudBigquery.query(projectId, keyFileContent, 'SELECT * FROM `database-30f7f3c2abdbda4f.user_preferences`')

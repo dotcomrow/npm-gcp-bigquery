@@ -1,39 +1,33 @@
 import axios from 'axios';
 import GetAccessToken from './getGoogleAccessToken';
 import fetchAdapter from "@haverstack/axios-fetch-adapter";
+import GCloudAuth from './getGoogleAccessToken';
 
-class GCloudLogger {
-  public static async logEntry(projectId: string, keyfile: string, logName: string, logEntries: Array<any>) {
-    const url = `https://logging.googleapis.com/v2/entries:write`;
-    
+class GCloudBigquery {
+  public static async query(projectId: string, keyfile: string, query: string) {
     const scope = 'https://www.googleapis.com/auth/logging.write'; // replace with the desired scope
 
 
-    const gcloudAuth = new GetAccessToken(projectId, keyfile);
+    const gcloudAuth = new GetAccessToken(keyfile);
     const accessToken = await gcloudAuth.getAccessToken(scope);
 
-    const logEntry = {
-      logName: `projects/${projectId}/logs/${logName}`,
-      resource: {
-        type: 'global',
+    const client = axios.create({
+      adapter: fetchAdapter
+    });
+    const response = await client.post(
+      `https://bigquery.googleapis.com/bigquery/v2/projects/${projectId}/queries`,
+      {
+        query,
+        useLegacySql: false,
       },
-      entries: logEntries
-    };
-
-    try {
-      const client = axios.create({
-        adapter: fetchAdapter
-      });
-      await client.post(url, logEntry, {
+      {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
         },
-      });
-    } catch (error) {
-      console.error(`Error logging to ${logName}:`, (error as any).response?.data || (error as any).message);
-    }
+      }
+    );
+
+    return response.data;
   }
 }
-
-export default GCloudLogger;
+export default GCloudBigquery;
