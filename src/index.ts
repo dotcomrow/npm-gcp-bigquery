@@ -6,7 +6,6 @@ class GCloudBigquery {
   public static async query(projectId: string, keyfile: string, query: string) {
     const scope = 'https://www.googleapis.com/auth/bigquery'; // replace with the desired scope
     
-
     const gcloudAuth = new GetAccessToken(keyfile);
     const accessToken = await gcloudAuth.getAccessToken(scope);
 
