@@ -4,7 +4,7 @@ import fetchAdapter from "@haverstack/axios-fetch-adapter";
 
 class GCloudBigquery {
   public static async query(projectId: string, keyfile: string, query: string) {
-    const scope = 'ttps://www.googleapis.com/auth/bigquery'; // replace with the desired scope
+    const scope = 'https://www.googleapis.com/auth/bigquery'; // replace with the desired scope
     
 
     const gcloudAuth = new GetAccessToken(keyfile);
