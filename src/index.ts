@@ -1,7 +1,6 @@
 import axios from 'axios';
 import GetAccessToken from './getGoogleAccessToken';
 import fetchAdapter from "@haverstack/axios-fetch-adapter";
-import GCloudAuth from './getGoogleAccessToken';
 
 class GCloudBigquery {
   public static async query(projectId: string, keyfile: string, query: string) {
